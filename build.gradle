@@ -1,0 +1,82 @@
+buildscript {
+    repositories {
+        maven { url "http://mvn/artifactory/public" }
+        maven { url 'http://mvn/artifactory/gradleplugins' }
+    }
+f
+    dependencies {
+        classpath 'ru.alfalab.gradle:cucumber-reporting-gradle-plugin:0.1.0'
+        classpath "ru.alfalab.documentation:documentation-gradle-plugin:0.6.0"
+        classpath "ru.alfalab.documentation:documentation-publishing-gradle-plugin:0.7.0"
+        classpath 'ru.alfalab.gradle:cucumber-parallel-test-gradle-plugin:0.2.1'
+    }
+}
+
+repositories {
+    maven { url "http://mvn/artifactory/public" }
+    maven { url "http://mvn/artifactory/thirdparty" }
+    maven { url "http://mvn/artifactory/Autotests" }
+}
+
+apply plugin: 'java'
+apply plugin: 'groovy'
+apply plugin: 'ru.alfalab.cucumber-reporting'
+apply plugin: 'ru.alfalab.cucumber-parallel-test'
+apply plugin: 'ru.alfalab.documentation'
+apply plugin: 'ru.alfalab.documentation.publishing'
+
+description = """Template for your project (CHANGE ME!!!)"""
+generateRunner.glue = ["ru.alfabank.steps", "steps"]
+
+if (project.hasProperty('projVersion')) {
+    project.version = project.projVersion
+} else {
+    project.version = '1.0.0'
+}
+
+dependencies {
+    compile(group: 'ru.alfabank.tests', name: 'akita', version: '3.0.2')
+    compile group: 'ru.alfabank.tests', name: 'akita-healthcheck', version: '1.0.37'
+    compile group: 'ru.alfabank.thrift', name: 'thrift-api', version: '0.2.+'
+    /* Добавь, если нужны тебе
+    compile group: 'org.slf4j', name: 'slf4j-simple', version:'1.7.21'
+    compile group: 'org.json', name: 'json', version:'20160810'
+    compile group: 'org.projectlombok', name: 'lombok', version:'1.16.10'
+    compile group: 'io.rest-assured', name:'rest-assured', version:'3.0.1'
+    */
+}
+
+compileJava.options.encoding = 'UTF-8'
+compileTestJava.options.encoding = 'UTF-8'
+
+test {
+    maxParallelForks = 10
+    ignoreFailures = true
+
+    jvmArgs += "-Dbrowser=${browser}"
+    jvmArgs += "-Ddevice=${device}"
+    jvmArgs += "-Dprofile=${profile}"
+    jvmArgs += "-Dfile.encoding=UTF-8"
+    jvmArgs += "-Dselenide.pageLoadStrategy=none"
+
+    if (browser.equals("chrome")) {
+        jvmArgs += "-Dselenide.browser=drivers.AkitaChromeDriverProvider"
+    }
+    if (tag) {
+        jvmArgs += "-Dcucumber.options=--tags ${tag}"
+    }
+    if (remoteHub) {
+        jvmArgs += "-Dremote=${remoteHub}"
+    }
+
+    reports {
+        html.enabled = false
+        junitXml.enabled = false
+    }
+}
+
+task makeZip (type: Zip){
+    from('build/reports/cucumber'){
+        into("${project.version}-testReport")
+    }
+}
