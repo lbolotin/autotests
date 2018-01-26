@@ -24,8 +24,8 @@ apply plugin: 'ru.alfalab.cucumber-parallel-test'
 apply plugin: 'ru.alfalab.documentation'
 apply plugin: 'ru.alfalab.documentation.publishing'
 
-description = """Template for your project (CHANGE ME!!!)"""
-generateRunner.glue = ["ru.alfabank.steps", "steps"]
+description = """Lessons"""
+generateRunner.glue = ["ru.alfabank.Lesson6.steps", "Lesson6.Lesson6.steps"]
 
 if (project.hasProperty('projVersion')) {
     project.version = project.projVersion
@@ -35,8 +35,7 @@ if (project.hasProperty('projVersion')) {
 
 dependencies {
     compile(group: 'ru.alfabank.tests', name: 'akita', version: '3.0.2')
-    compile group: 'ru.alfabank.tests', name: 'akita-healthcheck', version: '1.0.37'
-    compile group: 'ru.alfabank.thrift', name: 'thrift-api', version: '0.2.+'
+//    compile group: 'ru.alfabank.tests', name: 'akita-healthcheck', version: '1.0.37'
     /* Добавь, если нужны тебе
     compile group: 'org.slf4j', name: 'slf4j-simple', version:'1.7.21'
     compile group: 'org.json', name: 'json', version:'20160810'
@@ -53,20 +52,21 @@ test {
     ignoreFailures = true
 
     jvmArgs += "-Dbrowser=${browser}"
-    jvmArgs += "-Ddevice=${device}"
+//    jvmArgs += "-Ddevice=${device}"
     jvmArgs += "-Dprofile=${profile}"
     jvmArgs += "-Dfile.encoding=UTF-8"
     jvmArgs += "-Dselenide.pageLoadStrategy=none"
+    jvmArgs += "-Dwebdriver.chrome.driver=D:\\chromedriver_win32\\chromedriver.exe"
 
-    if (browser.equals("chrome")) {
-        jvmArgs += "-Dselenide.browser=drivers.AkitaChromeDriverProvider"
-    }
-    if (tag) {
-        jvmArgs += "-Dcucumber.options=--tags ${tag}"
-    }
-    if (remoteHub) {
-        jvmArgs += "-Dremote=${remoteHub}"
-    }
+//    if (browser.equals("chrome")) {
+//        jvmArgs += "-Dselenide.browser=drivers.AkitaChromeDriverProvider"
+//    }
+//    if (tag) {
+//        jvmArgs += "-Dcucumber.options=--tags ${tag}"
+//    }
+//    if (remoteHub) {
+//        jvmArgs += "-Dremote=${remoteHub}"
+//    }
 
     reports {
         html.enabled = false

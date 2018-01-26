@@ -102,7 +102,7 @@ File/Settings/Plugins/Install JetBrains Plugins или с диска.
 * файл **build.gradle** содержит  информацию о всех подгружаемых библиотеках и плагинах для нашего тестового проекта
 В данном файле указывается то, где лежат классы с шагами:
 ```
-generateRunner.glue = ["ru.alfabank.steps", "steps"]
+generateRunner.glue = ["ru.alfabank.Lesson6.steps", "Lesson6.steps"]
 ```
 * параметры по умолчанию для gradle задач указываются в **gradle.properties**
 * файл **settings.gradle** содержит только название проекта
