@@ -14,7 +14,7 @@ public class MainSelenidePage {
     @FindBy(xpath = "//span[text()='Рейтинги']")
     private SelenideElement ratings;
 
-    @FindBy(xpath = "/descendant::*[text()=\"Топ 250\"]")
+    @FindBy(xpath = "//*[text()=\"Топ 250\"]")
     private SelenideElement top250;
 
     @FindBy(css = ".header-menu-partial-component__subitems")

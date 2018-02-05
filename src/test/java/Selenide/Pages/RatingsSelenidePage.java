@@ -7,7 +7,7 @@ import static com.codeborne.selenide.Selenide.page;
 
 public class RatingsSelenidePage {
 
-    @FindBy(xpath = "//tr[@class=\"top250_place_1\"]")
+    @FindBy(xpath = "//tr[@id=\"top250_place_1\"]/td/following-sibling::td/a")
     private WebElement top1;
 
     public FilmSelenidePage topOneMovieClick() {

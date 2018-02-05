@@ -17,25 +17,26 @@ public class KinopoiskSelenideTest {
 
     @Before
     public void openUrl() {
+        System.setProperty("browser", "chrome");
         open("https://www.kinopoisk.ru/");
         WebDriverRunner.getWebDriver().manage().window().fullscreen();
     }
 
     @Test
-    public void searchFilm() throws InterruptedException {
+    public void searchFilm() {
 
         MainSelenidePage mainPage = Selenide.page(MainSelenidePage.class);
         FilmSelenidePage filmPage = mainPage.searchInfo(GEO);
-        filmPage.findMovieTitle().shouldHave(text("GEO"));
+        filmPage.findMovieTitle().shouldHave(text("Геошторм"));
     }
 
     @Test
-    public void chtoToTest() {
+    public void checkTopOneClickFilm() {
         MainSelenidePage mainPage = page(MainSelenidePage.class);
         mainPage.hoverOnElementAndCheckPopUp();
         RatingsSelenidePage ratingsPage = mainPage.clickOnTop250();
         FilmSelenidePage filmPage = ratingsPage.topOneMovieClick();
-        filmPage.findMovieTitle().shouldHave(text("Побег из Шоушенка (1994)"));
+        filmPage.findMovieTitle().shouldHave(text("Побег из Шоушенка"));
         title().equals((text("Побег из Шоушенка — КиноПоиск")));
     }
 }
